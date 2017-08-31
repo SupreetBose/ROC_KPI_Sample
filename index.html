@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>ROC-KPI Sample Dashboard</title>
+	<script src="d3.min.js"></script>
+	<script src="dimple.v2.3.0.min.js"></script>
+    <meta charset="utf-8">
+  
+</head>
+<body>
+<div id="chartContainer">
+		<script type="text/javascript">
+			var svg = dimple.newSvg("#chartContainer",600,600);//creating a SVG with given size
+			d3.csv("IT_Help_Desk.csv",function(data)// function called when athlets.csv is done loading
+			{
+		console.log("done loading");
+		console.log(data);
+		var grpFile2 = d3.nest()
+  .key(function(d) { return d.FiledAgainst; })
+  .key(function(d) { return d.Satisfaction; })
+  .entries(data);
+console.log("Group File2",grpFile2);
+				var myChart = new dimple.chart(svg, data);
+      myChart.setBounds(65, 45, 505, 315)
+      myChart.addCategoryAxis("x", "FiledAgainst");
+      myChart.addMeasureAxis("y", "Counts");
+      myChart.addSeries("Satisfaction", dimple.plot.bar);
+      myChart.addLegend(200, 10, 380, 20, "right");
+      myChart.draw();
+			});
+		</script>
+	</div>
+</body>
+</html>
